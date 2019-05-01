@@ -54,7 +54,24 @@ namespace ProjectA
         /// <returns>The M-sized vector a * v.</returns>
         public static Vector Product(this Matrix a, Vector v)
         {
-            throw new NotImplementedException();
+            var mRows = a.M_Rows;
+            var nCols = a.N_Cols;
+            
+            var retval = new double[mRows];
+
+            for (int i = 0; i < mRows; i++) 
+            {
+                var value = 0.0;
+                
+                for (int j = 0; j < nCols; j++) 
+                {
+                    value += a[i, j] * v[j];
+                }
+
+                retval[i] = value;
+            }
+            
+            return new Vector(retval);
         }
 
         /// <summary>
@@ -73,7 +90,29 @@ namespace ProjectA
         /// <returns>The M-by-P matrix a * b.</returns>
         public static Matrix Product(this Matrix a, Matrix b)
         {
-            throw new NotImplementedException();
+            var mRows = a.M_Rows;
+            var nCols = a.N_Cols;
+            var pCols = b.N_Cols;
+            
+            var retval = new double[mRows, pCols];
+
+            for (int i = 0; i < mRows; i++) 
+            {
+                for (int j = 0; j < pCols; j++) 
+                {
+                    var indexValue = 0.0;
+                    
+                    for (int k = 0; k < nCols; k++) 
+                    {
+                        indexValue += a[i, k] * b[k, j];
+                    }
+
+                    retval[i, j] = indexValue;
+                }
+                
+            }
+            
+            return new Matrix(retval);
         }
 
         /// <summary>
@@ -90,7 +129,20 @@ namespace ProjectA
         /// <returns>The N-by-M matrix a^T.</returns>
         public static Matrix Transpose(this Matrix a)
         {
-            throw new NotImplementedException();
+            var mRows = a.M_Rows;
+            var nCols = a.N_Cols;
+
+            var retval = new double[nCols, mRows];
+
+            for (var i = 0; i < nCols; i++)
+            {
+                for (var j = 0; j < mRows; j++)
+                {
+                    retval[i, j] = a[j, i];
+                }
+            }
+
+            return new Matrix(retval);
         }
 
         /// <summary>
@@ -105,9 +157,16 @@ namespace ProjectA
         /// <param name="v">An N-dimensional vector.</param>
         ///
         /// <returns>The Euclidean norm of the vector.</returns>
-        public static double VectorNorm(this Vector v)
-        {
-            throw new NotImplementedException();
+        public static double VectorNorm(this Vector v) {
+            
+            var retval = 0.0;
+            
+            for (int i = 0; i < v.Size; i++) 
+            {
+                retval += Math.Pow(v[i],2);
+            }
+
+            return Math.Sqrt(retval);
         }
     }
 }
